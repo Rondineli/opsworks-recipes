@@ -1,0 +1,15 @@
+[Unit]
+Description=Flask app sample opsworks
+After=syslog.target
+ConditionPathExists=/opt/aws_labs/app/flask/app.py
+
+[Service]
+ExecReload=/bin/kill -HUP $MAINPID
+ExecStart=/usr/local/bin/uwsgi --ini uwsg.ini --virtualenv $(pipenv --venv)
+RuntimeDirectory=/opt/aws_labs/app/flask/
+KillMode=process
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+Alias=flask_app.service
