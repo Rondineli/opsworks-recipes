@@ -6,7 +6,8 @@
 
 
 packages_to_install = [
-  'uwsgi', 'python3-pip', 'nginx'
+  'uwsgi', 'python3.7-minimal', 'python3.7-dev','python3-pip', 'nginx',
+  'wget', 'vim'
 ]
 
 packages_to_install.each do |pkg|
@@ -16,22 +17,16 @@ packages_to_install.each do |pkg|
   end
 end
 
-python_runtime "flask_app" do
-  provider :system
-	options package_name: 'python3.7', package_version:'3.7.2-1'
-end
-
-python_virtualenv "/opt/venv" do
-  interpreter "python3.7.2"
-  action :create
-end
-
 bash "run_install" do
   user "root"
+  cwd "/opt/aws_labs/app/flask/"
   code <<-EOH
-    cd /src/app
-    pipenv install
+    python3.7 -m pip install -U pip
+    pip3.7 install -U pipenv
+    pip3.7 install -U uwsgi
+    PIPENV_VENV_IN_PROJECT=venv pipenv install
+    chown -R www-data: .venv
+
   EOH
   action :run
 end
-

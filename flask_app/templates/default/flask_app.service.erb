@@ -1,12 +1,16 @@
 [Unit]
 Description=Flask app sample opsworks
 After=syslog.target
-ConditionPathExists=/opt/aws_labs/app/flask/app.py
+ConditionPathExists=/opt/aws_labs/app/flask/wsgi.py
 
 [Service]
+User=www-data
+Group=www-data
 ExecReload=/bin/kill -HUP $MAINPID
-ExecStart=/usr/local/bin/uwsgi --ini uwsg.ini --virtualenv $(pipenv --venv)
-RuntimeDirectory=/opt/aws_labs/app/flask/
+ExecStart=/usr/local/bin/uwsgi --ini uwsg.ini --virtualenv /opt/aws_labs/app/flask/.venv/
+Environment="PATH=/opt/aws_labs/app/flask/.venv/bin"
+RuntimeDirectory=/opt/aws_labs/app/flask
+WorkingDirectory=/opt/aws_labs/app/flask
 KillMode=process
 Restart=on-failure
 

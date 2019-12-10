@@ -3,5 +3,5 @@ source 'https://supermarket.chef.io'
 cookbook 'poise-python'
 cookbook 'git'
 cookbook 'apt'
-cookbook 'flask_app', path: 'flask_app'
+
 metadata

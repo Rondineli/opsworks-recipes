@@ -31,12 +31,3 @@ server {
         proxy_redirect              off;
     }
 }
-
-gzip_http_version                   1.1;
-gzip_vary                           on;
-gzip_comp_level                     6;
-gzip_proxied                        any;
-gzip_types                          application/javascript text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
-gzip_buffers                        16 8k;
-gzip_disable                        "MSIE [1-6].(?!.*SV1)";
-gzip_proxied                        expired no-cache no-store private auth;
